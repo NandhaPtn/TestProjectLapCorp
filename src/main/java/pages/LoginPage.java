@@ -10,6 +10,7 @@ import qa.util.ElementUtil;
 public class LoginPage extends ElementUtil {
 
     ElementUtil elementUtil;
+
     @FindBy (xpath = "//span[text()='Shop Tests']")
     private WebElement shopTestButton;
     @FindBy (xpath = "(//*[local-name()='svg' and @fill='none']/*[local-name()='g'])[1]")
