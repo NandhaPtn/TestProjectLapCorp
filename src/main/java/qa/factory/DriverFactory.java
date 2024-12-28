@@ -1,5 +1,7 @@
 package qa.factory;
 import org.openqa.selenium.*;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import qa.util.ConfigReader;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -8,6 +10,7 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.safari.SafariDriver;
 
 import java.io.IOException;
+import java.time.Duration;
 
 
 public class DriverFactory {
@@ -36,8 +39,10 @@ public class DriverFactory {
     }
     public static void handleAcceptCookiesPopup() {
         try {
-            JavascriptExecutor jsExecutor = (JavascriptExecutor) getDriver();
-            jsExecutor.executeScript("document.getElementById('onetrust-accept-btn-handler').click();");
+            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+            WebElement element = wait.until(ExpectedConditions.elementToBeClickable(By.id("onetrust-accept-btn-handler")));
+            JavascriptExecutor jsExecutor = (JavascriptExecutor) driver;
+            jsExecutor.executeScript("arguments[0].click();", element);
         } catch (TimeoutException e) {
             System.out.println("No cookies popup found, continuing...");
         }
